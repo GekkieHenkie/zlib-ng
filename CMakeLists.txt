@@ -831,7 +831,6 @@ if (NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
     # Create the .cmake to import the library target into an external project.
     # Output path: ${CMAKE_INSTALL_PREFIX}/cmake
     install(EXPORT zlib DESTINATION cmake)
-    install(EXPORT zlibstatic DESTINATION cmake)
 endif ()
 
 if (NOT SKIP_INSTALL_HEADERS AND NOT SKIP_INSTALL_ALL )
