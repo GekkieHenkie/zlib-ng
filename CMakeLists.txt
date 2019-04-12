@@ -808,14 +808,14 @@ if (UNIX)
         set_target_properties(zlib PROPERTIES LINK_FLAGS "-Wl,--version-script,\"${CMAKE_CURRENT_SOURCE_DIR}/${LIBNAME2}.map\"")
     endif ()
 elseif (MSYS)
-   # Suppress version number from shared library name
-   set(CMAKE_SHARED_LIBRARY_NAME_WITH_VERSION 0)
+    # Suppress version number from shared library name
+    set(CMAKE_SHARED_LIBRARY_NAME_WITH_VERSION 0)
 elseif (WIN32)
     ## Creates zlib1.dll when building shared library version
     #set_target_properties(zlib PROPERTIES SUFFIX "1.dll")
     
     # Make the naming on Windows more consistent with the naming on other platforms.
-    set_target_properties(z PROPERTIES OUTPUT_NAME "libz${SUFFIX}")
+    set_target_properties(zlib PROPERTIES OUTPUT_NAME "libz${SUFFIX}")
     set_target_properties(zlibstatic PROPERTIES OUTPUT_NAME "libz${SUFFIX}_static")
 endif ()
 
