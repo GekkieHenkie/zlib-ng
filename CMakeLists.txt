@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.5.1)
 
 if (CMAKE_VERSION VERSION_LESS 3.12)
-  cmake_policy(VERSION ${CMAKE_VERSION})
+    cmake_policy(VERSION ${CMAKE_VERSION})
 else ()
-  cmake_policy(VERSION 3.5.1...3.13.2)
+    cmake_policy(VERSION 3.5.1...3.13.2)
 endif ()
 
 set(CMAKE_MACOSX_RPATH 1)
@@ -12,29 +12,29 @@ set(CMAKE_MACOSX_RPATH 1)
 # Configuration items that affect the global compiler envirionment standards
 # should be issued before the "project" command.
 if (NOT CMAKE_C_STANDARD)
-  set(CMAKE_C_STANDARD 99)          #The C standard whose features are requested to build this target
+    set(CMAKE_C_STANDARD 99)          #The C standard whose features are requested to build this target
 endif ()
 
 if (NOT CMAKE_C_STANDARD_REQUIRED)
-  set(CMAKE_C_STANDARD_REQUIRED ON) #Boolean describing whether the value of C_STANDARD is a requirement
+    set(CMAKE_C_STANDARD_REQUIRED ON) #Boolean describing whether the value of C_STANDARD is a requirement
 endif ()
 
 if (NOT CMAKE_C_EXTENSIONS)
-  set(CMAKE_C_EXTENSIONS OFF)       #Boolean specifying whether compiler specific extensions are requested
+    set(CMAKE_C_EXTENSIONS OFF)       #Boolean specifying whether compiler specific extensions are requested
 endif ()
 
 set(VALID_C_STANDARDS "99" "11")
 
 if (NOT CMAKE_C_STANDARD IN_LIST VALID_C_STANDARDS )
-   message(FATAL_ERROR "CMAKE_C_STANDARD:STRING=${CMAKE_C_STANDARD} not in know standards list\n ${VALID_C_STANDARDS}")
+    message(FATAL_ERROR "CMAKE_C_STANDARD:STRING=${CMAKE_C_STANDARD} not in know standards list\n ${VALID_C_STANDARDS}")
 endif ()
 
 # parse the full version number from zlib.h and include in ZLIB_FULL_VERSION
 file(READ ${CMAKE_CURRENT_SOURCE_DIR}/zlib${SUFFIX}.h _zlib_h_contents)
 string(REGEX REPLACE ".*#define[ \t]+ZLIB_VERSION[ \t]+\"([0-9]+.[0-9]+.[0-9]+).*\".*"
-        "\\1" ZLIB_HEADER_VERSION ${_zlib_h_contents})
+       "\\1" ZLIB_HEADER_VERSION ${_zlib_h_contents})
 string(REGEX REPLACE ".*#define[ \t]+ZLIBNG_VERSION[ \t]+\"([-0-9A-Za-z.]+)\".*"
-        "\\1" ZLIBNG_HEADER_VERSION ${_zlib_h_contents})
+       "\\1" ZLIBNG_HEADER_VERSION ${_zlib_h_contents})
 message(STATUS "ZLIB_HEADER_VERSION: ${ZLIB_HEADER_VERSION}")
 message(STATUS "ZLIBNG_HEADER_VERSION: ${ZLIBNG_HEADER_VERSION}")
 
@@ -114,7 +114,7 @@ endif ()
 
 if (${CMAKE_C_COMPILER} MATCHES "icc" OR ${CMAKE_C_COMPILER} MATCHES "icpc" OR ${CMAKE_C_COMPILER} MATCHES "icl")
 
-    if(WITH_NATIVE_INSTRUCTIONS)
+    if (WITH_NATIVE_INSTRUCTIONS)
         message(STATUS "Ignoring WITH_NATIVE_INSTRUCTIONS; not supported on this configuration")
     endif ()
     
@@ -393,18 +393,18 @@ check_c_source_compiles(
     HAVE_PTRDIFF_T
 )
 if (NOT HAVE_PTRDIFF_T)
-  set(NEED_PTRDIFF_T 1)
+    set(NEED_PTRDIFF_T 1)
 
-  check_type_size("void *" SIZEOF_DATA_PTR)
-  message(STATUS "sizeof(void *) is ${SIZEOF_DATA_PTR} bytes")
+    check_type_size("void *" SIZEOF_DATA_PTR)
+    message(STATUS "sizeof(void *) is ${SIZEOF_DATA_PTR} bytes")
 
-  if (${SIZEOF_DATA_PTR} MATCHES "4")
-    set(PTRDIFF_TYPE "uint32_t")
-  elseif (${SIZEOF_DATA_PTR} MATCHES "8")
-    set(PTRDIFF_TYPE "uint64_t")
-  else ()
-    message(FATAL_ERROR "sizeof(void *) is neither 32 nor 64 bit")
-  endif ()
+    if (${SIZEOF_DATA_PTR} MATCHES "4")
+        set(PTRDIFF_TYPE "uint32_t")
+    elseif (${SIZEOF_DATA_PTR} MATCHES "8")
+        set(PTRDIFF_TYPE "uint64_t")
+    else ()
+        message(FATAL_ERROR "sizeof(void *) is neither 32 nor 64 bit")
+    endif ()
 endif ()
 
 # Macro to check if source compiles when cross-compiling
@@ -640,6 +640,7 @@ if (WITH_OPTIM)
             add_definitions(-DX86_PCLMULQDQ_CRC)
             set(ZLIB_ARCH_SRCS ${ZLIB_ARCH_SRCS} ${ARCHDIR}/crc_folding.c)
             add_intrinsics_option("${PCLMULFLAG}")
+	    
             if (HAVE_SSE42_INTRIN)
                 add_feature_info(PCLMUL_CRC 1 "Support CRC hash generation using PCLMULQDQ, using \"${PCLMULFLAG}\"")
             else ()
@@ -658,6 +659,7 @@ message(STATUS "Architecture-specific source files: ${ZLIB_ARCH_SRCS}")
 macro(generate_cmakein input output)
     file(REMOVE ${output})
     file(STRINGS ${input} _lines)
+    
     foreach (_line IN LISTS _lines)
         file(APPEND ${output} "${_line}\n")
 
@@ -669,7 +671,7 @@ macro(generate_cmakein input output)
               file(APPEND ${output} "#cmakedefine PTRDIFF_TYPE ${PTRDIFF_TYPE}\n")
             endif ()
         endif ()
-    endforeach ()
+    endforeach () 
 endmacro(generate_cmakein)
 
 generate_cmakein( ${CMAKE_CURRENT_SOURCE_DIR}/zconf${SUFFIX}.h.in ${CMAKE_CURRENT_BINARY_DIR}/zconf${SUFFIX}.h.cmakein )
