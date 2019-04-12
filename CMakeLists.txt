@@ -823,8 +823,8 @@ endif ()
 
 if (NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL )
     install(TARGETS zlib zlibstatic
-            EXPORT zlib zlibstatic
-            RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
+            EXPORT zlib 
+	    RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
             ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
             LIBRARY DESTINATION "${INSTALL_LIB_DIR}" )
 
